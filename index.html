@@ -9,24 +9,43 @@
 </head>
 <body>
 
+    <div class="container">
+        <div class="row">
+            <div class="column column-3">
+                <label>hours</label>
+                <input type="number" name="hours" min="0" max="23" value="23">
+            </div>
 
-    <input type="number" name="hours" placeholder="25" value="23">
-    <span>hours</span>
+            <div class="column column-3">
+                <label>minutes</label>
+                <input type="number" name="minutes" min="0" max="59" value="25">
+            </div>
 
-    <input type="number" name="minutes" placeholder="25" value="25">
-    <span>minutes</span>
+            <div class="column column-3">
+                 <label>seconds</label>
+                <input type="number" name="seconds" min="0" max="59" value="25">
+            </div>
+        </div>
 
-    <input type="number" name="seconds" placeholder="25" value="25">
-    <span>seconds</span>
+        <div class="row">
+            <div class="column">
+                <h1>Time remaining</h1>
+                <span class="remainhours"></span><span>:</span>
+                <span class="remainminutes"></span><span>:</span>
+                <span class="remainseconds"></span>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="column">
+                <button class="start">Start/Stop</button>
+                <button class="reset">Reset</button>
+            </div>
+        </div>        
+        
 
-    <button class="start">Start/Stop</button>
-    <button class="reset">Reset</button>
-    
-    <h1>time</h1>
-    <span class="remainhours"></span>
-    <span class="remainminutes"></span>
-    <span class="remainseconds"></span>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

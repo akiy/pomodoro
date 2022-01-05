@@ -1,62 +1,79 @@
 const hours = document.querySelector('input[name="hours"]');
 const minutes = document.querySelector('input[name="minutes"]');
 const seconds = document.querySelector('input[name="seconds"]');
-let countdownhours = hours.value / 1;
-let countdownminutes = minutes.value / 1;
-let countdownseconds = seconds.value / 1;
-
-
-hours.addEventListener('input', function(){
-    countdownhours = hours.value / 1;
-});
-
-minutes.addEventListener('input', function(){
-    countdownminutes = minutes.value / 1;
-});
-
-seconds.addEventListener('input', function(){
-    countdownseconds = seconds.value / 1;
-});
+let countdownhours = parseInt(hours.value);
+let countdownminutes = parseInt(minutes.value);
+let countdownseconds = parseInt(seconds.value);
 
 let remainhours = document.querySelector('.remainhours');
 let remainminutes = document.querySelector(".remainminutes");
 let remainseconds = document.querySelector(".remainseconds");
 
+remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
+remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
+remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
+
+
 const startStopButton = document.querySelector(".start");
 const resetButton = document.querySelector(".reset")
 
+hours.addEventListener('change' , function() {
+    countdownhours = parseInt(hours.value);
+    remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
+});
+
+minutes.addEventListener('change' , function() {
+    countdownminutes = parseInt(minutes.value);
+    remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
+});
+
+seconds.addEventListener('change' , function() {
+    countdownseconds = parseInt(seconds.value);
+    remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
+});
+
+let  pomodoro;
+let stop = false
 
 const remainTime = function() {
-    remainhours.innerHTML = countdownhours;
-    remainminutes.innerHTML = countdownminutes;
-    remainseconds.innerHTML = countdownseconds;
-    console.log(countdownminutes, countdownseconds);
-    countdownseconds--;    
-   
-   if(countdownseconds < 1) {
+    countdownseconds--;   
+    remainhours.innerHTML = countdownhours < 10 ? `0${countdownhours}` : countdownhours ;
+    remainminutes.innerHTML = countdownminutes < 10 ? `0${countdownminutes}` : countdownminutes;
+    remainseconds.innerHTML = countdownseconds < 10 ? `0${countdownseconds}` : countdownseconds;
+ 
+   if(countdownseconds < 0) {
        countdownseconds = 59;
        countdownminutes--;
    }
 
-   if(countdownminutes < 1) {
+   if(countdownminutes < 0) {
        countdownminutes = 59;
        countdownhours--;
    }
+   
 };
-
-let stop = true;
 
 const startStopPomodoro = function() {
-    let start;
-    if(!stop) {
-        start = setInterval(remainTime, 1000);
-        stop = false;
-        console.log(stop);
-    } else {
-        clearInterval(start);
-        stop = true;
-        console.log(stop);
-    }
-};
+  if(!stop) {
+    pomodoro = setInterval(remainTime, 1000);
+    stop = true;
+  } else {
+    clearInterval(pomodoro);
+    stop = false;
+  }
+}
+
+const resetPomodoro = function() {
+  clearInterval(pomodoro);
+  stop = false;
+  countdownhours = parseInt(hours.value);
+  countdownminutes = parseInt(minutes.value);
+  countdownseconds = parseInt(seconds.value);
+
+  remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
+  remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
+  remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
+}
 
 startStopButton.addEventListener('click', startStopPomodoro);
+resetButton.addEventListener('click', resetPomodoro);
