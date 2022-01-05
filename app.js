@@ -1,56 +1,30 @@
 const hours = document.querySelector('input[name="hours"]');
 const minutes = document.querySelector('input[name="minutes"]');
 const seconds = document.querySelector('input[name="seconds"]');
-let countdownhours = parseInt(hours.value);
-let countdownminutes = parseInt(minutes.value);
-let countdownseconds = parseInt(seconds.value);
-
+const startStopButton = document.querySelector(".start");
+const resetButton = document.querySelector(".reset")
 let remainhours = document.querySelector('.remainhours');
 let remainminutes = document.querySelector(".remainminutes");
 let remainseconds = document.querySelector(".remainseconds");
-
-remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
-remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
-remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
-
-
-const startStopButton = document.querySelector(".start");
-const resetButton = document.querySelector(".reset")
-
-hours.addEventListener('change' , function() {
-    countdownhours = parseInt(hours.value);
-    remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
-});
-
-minutes.addEventListener('change' , function() {
-    countdownminutes = parseInt(minutes.value);
-    remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
-});
-
-seconds.addEventListener('change' , function() {
-    countdownseconds = parseInt(seconds.value);
-    remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
-});
-
 let  pomodoro;
 let stop = false
 
-const remainTime = function() {
-    countdownseconds--;   
-    remainhours.innerHTML = countdownhours < 10 ? `0${countdownhours}` : countdownhours ;
-    remainminutes.innerHTML = countdownminutes < 10 ? `0${countdownminutes}` : countdownminutes;
-    remainseconds.innerHTML = countdownseconds < 10 ? `0${countdownseconds}` : countdownseconds;
- 
-   if(countdownseconds < 0) {
-       countdownseconds = 59;
-       countdownminutes--;
-   }
+let remainTimeinSeconds = hours.value * 3600 + minutes.value * 60 + seconds.value / 1;
 
-   if(countdownminutes < 0) {
-       countdownminutes = 59;
-       countdownhours--;
-   }
-   
+const updateRemainTime = function() {
+    remainhours.innerHTML = parseInt(remainTimeinSeconds / 3600) < 10 ? `0${parseInt(remainTimeinSeconds / 3600)}` : parseInt(remainTimeinSeconds / 3600);
+    remainminutes.innerHTML = parseInt( (remainTimeinSeconds % 3600) / 60) < 10 ? `0${parseInt( (remainTimeinSeconds % 3600) / 60)}` : parseInt( (remainTimeinSeconds % 3600) / 60);
+    remainseconds.innerHTML = parseInt(remainTimeinSeconds % 3600 % 60) < 10 ?  `0${parseInt(remainTimeinSeconds % 3600 % 60)}` : parseInt(remainTimeinSeconds % 3600 % 60) ;    
+}
+
+const remainTime = function() {
+
+    remainTimeinSeconds--;
+
+    if(remainTimeinSeconds < 0) {
+       resetPomodoro();
+    }
+    updateRemainTime();
 };
 
 const startStopPomodoro = function() {
@@ -66,14 +40,28 @@ const startStopPomodoro = function() {
 const resetPomodoro = function() {
   clearInterval(pomodoro);
   stop = false;
-  countdownhours = parseInt(hours.value);
-  countdownminutes = parseInt(minutes.value);
-  countdownseconds = parseInt(seconds.value);
-
   remainhours.innerHTML = parseInt(hours.value) < 10 ? `0${hours.value}` : parseInt(hours.value);
   remainminutes.innerHTML = parseInt(minutes.value) < 10 ? `0${minutes.value}` : parseInt(minutes.value);
   remainseconds.innerHTML = parseInt(seconds.value) < 10 ? `0${seconds.value}` : parseInt(seconds.value);
+  remainTimeinSeconds = hours.value * 3600 + minutes.value * 60 + seconds.value / 1;
 }
+
+updateRemainTime();
+
+hours.addEventListener('change' , function() {
+    remainTimeinSeconds = hours.value * 3600 + minutes.value * 60 + seconds.value / 1;
+    updateRemainTime()
+});
+
+minutes.addEventListener('change' , function() {
+    remainTimeinSeconds = hours.value * 3600 + minutes.value * 60 + seconds.value / 1;
+    updateRemainTime()
+});
+
+seconds.addEventListener('change' , function() {
+    remainTimeinSeconds = hours.value * 3600 + minutes.value * 60 + seconds.value / 1;
+    updateRemainTime();
+});
 
 startStopButton.addEventListener('click', startStopPomodoro);
 resetButton.addEventListener('click', resetPomodoro);

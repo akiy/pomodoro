@@ -1,5 +1,5 @@
 :root{
-	--bg-color: #264653;
+	--bg-color: #fbf8cc;
 }
 
 *, *::before, *::after {
@@ -13,24 +13,36 @@ html {
 }
 
 body {
+	background-color: var(--bg-color);
 	color: #333;
 	line-height: 1.6;
 }
 
 input {
-	border: 1px solid #bbb;
+	color: #bf0603;
+	border: 1px solid #bf0603;
+	background-color: transparent;
+	outline: none;
 	border-radius: 3px;
 	width: 100%;
 	padding: .9rem 1rem;
 }
 
+@media screen and (min-width: 800px) {
+	input {
+		font-size: 1.2rem;
+	}
+}
+
 button{
-	border: 1px solid #bbb;
+	background-color: #bf0603;
+	border: 1px solid #bf0603;
 	border-radius: 3px;
-	color: #333;
+	color: #fff;
 	cursor: pointer;
 	padding: 0 3rem;
 	height: 3rem;
+	text-transform: uppercase;
 }
 
 .container {
@@ -64,9 +76,29 @@ button{
 	}
 }
 
+.title {
+	text-transform: uppercase;
+	color: #ff206e;
+}
+
+
 span{
-	color: #168aad;
+	color: #bf0603;
 	font-weight: 700;
 	font-size: 4rem;
 }
 
+label {
+	color: #bf0603;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.remain-time {
+	text-align: center;
+	width: 100%;
+}
+
+.buttons {
+	text-align: center;
+}

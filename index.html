@@ -13,33 +13,36 @@
         <div class="row">
             <div class="column column-3">
                 <label>hours</label>
-                <input type="number" name="hours" min="0" max="23" value="23">
+                <input type="number" name="hours" min="0" max="23" value="0">
             </div>
 
             <div class="column column-3">
                 <label>minutes</label>
-                <input type="number" name="minutes" min="0" max="59" value="25">
+                <input type="number" name="minutes" min="0" max="59" value="50">
             </div>
 
             <div class="column column-3">
                  <label>seconds</label>
-                <input type="number" name="seconds" min="0" max="59" value="25">
+                <input type="number" name="seconds" min="0" max="59" value="0">
             </div>
         </div>
 
         <div class="row">
             <div class="column">
-                <h1>Time remaining</h1>
-                <span class="remainhours"></span><span>:</span>
-                <span class="remainminutes"></span><span>:</span>
-                <span class="remainseconds"></span>
+                <div class="remain-time">
+                    <span class="remainhours"></span><span>:</span>
+                    <span class="remainminutes"></span><span>:</span>
+                    <span class="remainseconds"></span>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="column">
-                <button class="start">Start/Stop</button>
-                <button class="reset">Reset</button>
+                <div class="buttons">
+                    <button class="start">Start/Stop</button>
+                    <button class="reset">Reset</button>
+                </div>
             </div>
         </div>        
         
